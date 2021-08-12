@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import {
   BrowserRouter as Router,
@@ -9,19 +9,6 @@ import {
 
 import { gql, useQuery } from '@apollo/client'
 import './main.css'
-
-const Row = ({ row }) => {
-  if (row.includes('<img')) {
-    const regex = /<img.*?src="(.*?)"/
-    const src = regex.exec(row)[1]
-    return (
-      <div style={{ textAlign: 'center' }}>
-        <img src={src} alt='' style={{ maxWidth: '100%' }} />
-      </div>
-    )
-  }
-  return <p>{row}</p>
-}
 
 const Items = ({ page, params }) => {
   console.log(params)
