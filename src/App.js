@@ -80,6 +80,7 @@ function Item () {
           content={data.News_by_pk.react[1].child[0].text}
         />
       </Helmet>
+      <h1>{data.News_by_pk.title}</h1>
       {data.News_by_pk.react.map(({ id, child }) => (
         <p key={id} href={'/' + id}>
           {child ? child[0].text : ''}
