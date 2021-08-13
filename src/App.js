@@ -81,6 +81,13 @@ function Item () {
         />
       </Helmet>
       <h1>{data.News_by_pk.title}</h1>
+      <div style={{ textAlign: 'center' }}>
+        <img
+          src={data.News_by_pk.media}
+          alt={data.News_by_pk.title}
+          style={{ maxWidth: 300 }}
+        />
+      </div>
       {data.News_by_pk.react.map(({ id, child }) => (
         <p key={id} href={'/' + id}>
           {child ? child[0].text : ''}
