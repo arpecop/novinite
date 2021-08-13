@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import { gql, useQuery } from '@apollo/client'
+import { Helmet } from 'react-helmet'
 import './main.css'
 
 const Items = ({ page, params }) => {
@@ -61,8 +62,8 @@ function Item () {
     query MyQuery {
       News_by_pk(id: ${id}) {
         media
-        react
         title
+        react
       }
     }
   `
@@ -70,12 +71,23 @@ function Item () {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  //return JSON.stringify(data.News_by_pk.react)
-  return data.News_by_pk.react.map(({ id, child }) => (
-    <p key={id} href={'/' + id}>
-      {child ? child[0].text : ''}
-    </p>
-  ))
+  return (
+    <>
+      <Helmet>
+        <title>{data.News_by_pk.title}</title>
+        <meta
+          name='description'
+          content={data.News_by_pk.react[1].child[0].text}
+        />
+      </Helmet>
+      {data.News_by_pk.react.map(({ id, child }) => (
+        <p key={id} href={'/' + id}>
+          {child ? child[0].text : ''}
+        </p>
+      ))}
+      източник: nova.bg
+    </>
+  )
 }
 
 export default function App () {
