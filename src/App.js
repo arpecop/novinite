@@ -15,7 +15,7 @@ const Items = ({ page, params }) => {
   console.log(params)
   const EXCHANGE_RATES = gql`
     query MyQuery {
-      News(order_by: { id: desc }, limit: 30, offset: ${page * 30 - 30}) {
+      News(order_by: { id: desc }, limit: 50, offset: ${page * 50 - 50}) {
         id
         media
         title
@@ -108,6 +108,7 @@ export default function App () {
             exact
             render={props => <Items page={props.match.params.id} />}
           />
+
           <Route path='/:id'>
             <Item />
           </Route>
