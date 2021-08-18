@@ -32,7 +32,7 @@ const Items = ({ page, params }) => {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  const pages = Array(Math.round(data.News_aggregate.aggregate.count / 30))
+  const pages = Array(Math.round(data.News_aggregate.aggregate.count / 50))
     .fill(0)
     .map((x, i) => ({
       id: i + 1
