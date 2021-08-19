@@ -17,7 +17,6 @@ const Items = ({ page, params }) => {
     query MyQuery {
       News(order_by: { id: desc }, limit: 50, offset: ${page * 50 - 50}) {
         id
-        media
         title
       }
 
@@ -54,8 +53,31 @@ const Items = ({ page, params }) => {
     </>
   )
 }
+const RandomItems = ({ count }) => {
+  const EXCHANGE_RATES = gql`
+    query MyQuery {
+      News(limit: 10, offset: ${Math.floor(Math.random() * count)}) {
+        id
+        title
+      }
+    }
+  `
+  const { loading, error, data } = useQuery(EXCHANGE_RATES)
 
-function Item () {
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error :(</p>
+  return (
+    <div>
+      {data.News.map(item => (
+        <a id={item.id} href={'/' + item.id}>
+          {item.title}
+          <hr></hr>
+        </a>
+      ))}
+    </div>
+  )
+}
+const Item = () => {
   let match = useRouteMatch()
   const { id } = match.params
   const EXCHANGE_RATES = gql`
@@ -64,6 +86,11 @@ function Item () {
         media
         title
         react
+      }
+      News_aggregate {
+        aggregate {
+          count
+        }
       }
     }
   `
@@ -94,6 +121,8 @@ function Item () {
         </p>
       ))}
       източник: nova.bg
+      <hr></hr>
+      <RandomItems count={data.News_aggregate.aggregate.count} />
     </>
   )
 }
