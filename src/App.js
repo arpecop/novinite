@@ -63,11 +63,6 @@ const Item = () => {
         title
         react
       }
-      News_aggregate {
-        aggregate {
-          count
-        }
-      }
     }
   `
   const { loading, error, data } = useQuery(EXCHANGE_RATES)
@@ -78,10 +73,6 @@ const Item = () => {
     <>
       <Helmet>
         <title>{data.News_by_pk.title}</title>
-        <meta
-          name='description'
-          content={data.News_by_pk.react[1].child[0].text}
-        />
       </Helmet>
       <h1>{data.News_by_pk.title}</h1>
       <div style={{ textAlign: 'center' }}>
@@ -92,9 +83,12 @@ const Item = () => {
         />
       </div>
       {data.News_by_pk.react.map(({ id, child }) => (
-        <p key={id} href={'/' + id}>
-          {child ? child[0].text : ''}
-        </p>
+        <>
+          {JSON.stringify(child)}
+          <p key={id} href={'/' + id}>
+            {child ? child[0].text : ''}
+          </p>
+        </>
       ))}
       източник: nova.bg
       <hr></hr>
