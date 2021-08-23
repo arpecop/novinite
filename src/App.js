@@ -84,7 +84,6 @@ const Item = () => {
       </div>
       {data.News_by_pk.react.map(({ id, child }) => (
         <>
-          {JSON.stringify(child)}
           <p key={id} href={'/' + id}>
             {child ? child[0].text : ''}
           </p>
