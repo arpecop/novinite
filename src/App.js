@@ -89,7 +89,7 @@ const Item = () => {
           </p>
         </>
       ))}
-      източник: nova.bg
+      източник: {data.News_by_pk.source}
       <hr></hr>
     </>
   )
