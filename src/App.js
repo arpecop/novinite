@@ -11,6 +11,31 @@ import { gql, useQuery } from '@apollo/client'
 import { Helmet } from 'react-helmet'
 import './main.css'
 
+const Tags = ({ tag }) => {
+  const EXCHANGE_RATES = gql`
+    query MyQuery {
+      News(where: { tags: { _has_key: "${tag}" } }) {
+        id
+        title,
+        tags
+      }
+    }
+  `
+  const { loading, error, data } = useQuery(EXCHANGE_RATES)
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error :(</p>
+  return (
+    <>
+      {data.News.map(item => (
+        <a id={item.id} href={'/' + item.id}>
+          {item.title}
+          <hr></hr>
+        </a>
+      ))}
+    </>
+  )
+}
 const Items = ({ page, params }) => {
   console.log(params)
   const EXCHANGE_RATES = gql`
@@ -62,6 +87,7 @@ const Item = () => {
         media
         title
         react
+        tags
       }
     }
   `
@@ -89,6 +115,15 @@ const Item = () => {
           </p>
         </>
       ))}
+      <ul>
+        {data.News_by_pk.tags
+          .filter((v, i, a) => a.findIndex(t => t === v) === i)
+          .map(tag => (
+            <li id={tag}>
+              <a href={'/tag/' + tag}>{tag}</a>
+            </li>
+          ))}
+      </ul>
       източник: {data.News_by_pk.source}
       <hr></hr>
     </>
@@ -104,6 +139,11 @@ export default function App () {
             path='/page/:id'
             exact
             render={props => <Items page={props.match.params.id} />}
+          />
+          <Route
+            path='/tag/:id'
+            exact
+            render={props => <Tags tag={props.match.params.id} />}
           />
 
           <Route path='/:id'>
