@@ -9,6 +9,9 @@ import {
 
 import { gql, useQuery } from '@apollo/client'
 import { Helmet } from 'react-helmet'
+
+import Pagination from 'react-js-pagination'
+
 import './main.css'
 
 const Tags = ({ tag }) => {
@@ -36,11 +39,12 @@ const Tags = ({ tag }) => {
     </>
   )
 }
+
 const Items = ({ page, params }) => {
   console.log(params)
   const EXCHANGE_RATES = gql`
     query MyQuery {
-      News(order_by: { id: desc }, limit: 50, offset: ${page * 50 - 50}) {
+      News(order_by: { id: desc }, limit: 20, offset: ${page * 20 - 20}) {
         id
         title
       }
@@ -56,24 +60,23 @@ const Items = ({ page, params }) => {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  const pages = Array(Math.round(data.News_aggregate.aggregate.count / 50))
-    .fill(0)
-    .map((x, i) => ({
-      id: i + 1
-    }))
-
+  const totalPages = Math.ceil(data.News_aggregate.aggregate.count)
+  console.log(totalPages)
   return (
     <>
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={20}
+        totalItemsCount={totalPages}
+        pageRangeDisplayed={5}
+        getPageUrl={page => '/page/' + page}
+      />
+      <hr />
       {data.News.map(item => (
         <a id={item.id} href={'/' + item.id}>
           {item.title}
-          <hr></hr>
+          <hr />
         </a>
-      ))}
-      {pages.map(page => (
-        <>
-          <a href={'/page/' + page.id}>{page.id}</a>|
-        </>
       ))}
     </>
   )
