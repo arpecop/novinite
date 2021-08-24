@@ -118,17 +118,19 @@ const Item = () => {
           </p>
         </>
       ))}
-      <ul>
-        {data.News_by_pk.tags
-          .filter((v, i, a) => a.findIndex(t => t === v) === i)
-          .map(tag => (
-            <li id={tag}>
-              <a href={'/tag/' + tag}>{tag}</a>
-            </li>
-          ))}
-      </ul>
       източник: {data.News_by_pk.source}
       <hr></hr>
+      <ul>
+        {data.News_by_pk.tags &&
+          data.News_by_pk.tags
+            .filter((v, i, a) => a.findIndex(t => t === v) === i)
+            .map(tag => (
+              <li id={tag}>
+                <a href={'/tag/' + tag}>{tag}</a>
+              </li>
+            ))}
+        {}
+      </ul>
     </>
   )
 }
