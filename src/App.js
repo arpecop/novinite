@@ -40,8 +40,7 @@ const Tags = ({ tag }) => {
   )
 }
 
-const Items = ({ page, params }) => {
-  console.log(params)
+const Items = ({ page }) => {
   const EXCHANGE_RATES = gql`
     query MyQuery {
       News(order_by: { id: desc }, limit: 20, offset: ${page * 20 - 20}) {
@@ -61,7 +60,7 @@ const Items = ({ page, params }) => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
   const totalPages = Math.ceil(data.News_aggregate.aggregate.count)
-  console.log(totalPages)
+
   return (
     <>
       <Pagination
@@ -111,12 +110,11 @@ const Item = () => {
           style={{ maxWidth: 300 }}
         />
       </div>
-      {data.News_by_pk.react.map(({ id, child }) => (
-        <>
-          <p key={id} href={'/' + id}>
-            {child ? child[0].text : ''}
-          </p>
-        </>
+      {data.News_by_pk.react.map(({ id, child, text, attr }) => (
+        <span key={id}>
+          {child && <p>{child[0].text} </p>}
+          {text && <p>{text} </p>}
+        </span>
       ))}
       източник: {data.News_by_pk.source}
       <hr></hr>
