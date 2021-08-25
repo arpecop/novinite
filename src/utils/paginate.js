@@ -1,4 +1,4 @@
-const pagination = (totalPages, page, maxLength) => {
+const paginate = (totalPages, page, maxLength) => {
   function range (start, end) {
     return Array.from(Array(end - start + 1), (_, i) => i + start)
   }
@@ -32,4 +32,4 @@ const pagination = (totalPages, page, maxLength) => {
     range(totalPages - sideWidth + 1, totalPages)
   )
 }
-export default pagination
+export default paginate
