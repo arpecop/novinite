@@ -7,7 +7,6 @@ const TagsPage = ({ tag }) => {
       News(where: { tags: { _has_key: "${tag}" } }) {
         id
         title,
-        tags
       }
     }
   `
