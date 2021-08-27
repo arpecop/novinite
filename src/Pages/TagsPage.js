@@ -14,7 +14,7 @@ const TagsPage = ({ tag }) => {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
-  console.log(data)
+
   return (
     <>
       <h2>{tag}</h2>
